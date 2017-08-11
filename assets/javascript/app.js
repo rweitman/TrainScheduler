@@ -1,11 +1,11 @@
 // Initialize Firebase
   var config = {
-    apiKey: "AIzaSyD5V2S27k1DWeK_ADrsyuoSV-F9ozFvxoE",
-    authDomain: "train-scheduler-6c64c.firebaseapp.com",
-    databaseURL: "https://train-scheduler-6c64c.firebaseio.com",
-    projectId: "train-scheduler-6c64c",
-    storageBucket: "train-scheduler-6c64c.appspot.com",
-    messagingSenderId: "716006005256"
+      apiKey: "AIzaSyD5V2S27k1DWeK_ADrsyuoSV-F9ozFvxoE",
+      authDomain: "train-scheduler-6c64c.firebaseapp.com",
+      databaseURL: "https://train-scheduler-6c64c.firebaseio.com",
+      projectId: "train-scheduler-6c64c",
+      storageBucket: "train-scheduler-6c64c.appspot.com",
+      messagingSenderId: "716006005256"
   };
   firebase.initializeApp(config);
 
@@ -41,7 +41,7 @@ var dataRef = firebase.database();
     });
     // Firebase watcher + initial loader HINT: .on("value")
     dataRef.ref().on("child_added", function(childSnapshot) {
-   
+     
 
       var tname = childSnapshot.val().name;
       var tdest = childSnapshot.val().destination;
@@ -51,24 +51,24 @@ var dataRef = firebase.database();
 
       tFrequency = parseInt(tFrequency);
 
-     var firstTimeConverted = moment(firstTime, "HH:mm").subtract(10, "years").format("X");
-     console.log(firstTimeConverted);
+      var firstTimeConverted = moment(firstTime, "HH:mm").subtract(10, "years").format("X");
+      console.log(firstTimeConverted);
 
 
-    var differenceTimes = moment().diff(moment.unix(firstTimeConverted), "minutes");
-    console.log(differenceTimes);
+      var differenceTimes = moment().diff(moment.unix(firstTimeConverted), "minutes");
+      console.log(differenceTimes);
       var tRemainder = moment().diff(moment.unix(firstTimeConverted), "minutes") % timeFreq;
       var tMinutes = timeFreq - tRemainder;
 
 
       // To calculate the arrival time, add the tMinutes to the currrent time
       var tArrival = moment().add(tMinutes, "m").format("hh:mm A");
-  
+      
 
         //Add rows with new train data
         $("#train-table").append("<tr><td>" + childSnapshot.val().name + "</td><td>" + childSnapshot.val().destination + "</td><td>" + childSnapshot.val().tFrequency + "</td><td>" +
           tArrival + "</td><td>" + tMinutes + "</td></tr>");
 
-        }, function(errorObject) {
-      console.log("Errors handled: " + errorObject.code);
-    });
+      }, function(errorObject) {
+        console.log("Errors handled: " + errorObject.code);
+      });
